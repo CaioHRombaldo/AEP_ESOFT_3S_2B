@@ -1,0 +1,21 @@
+Importar dados do banco POSTGRES
+
+-----------------CRUD---------------------------------
+Função para cadastrar usuario_cliente
+Função para cadastrar usuario_prestador
+
+Função para consultar usuario_cliente
+Função para consultar usuario_prestador
+
+Função para editar usuario_cliente
+Função para editar usuario_prestador
+
+Função para deletar usuario_cliente
+Função para deletar usuario_prestador
+------------------------------------------------------
+
+Alterar senha
+
+------------------------------------------------------
+
+Função de pesquisar prestador de serviço por serviço
