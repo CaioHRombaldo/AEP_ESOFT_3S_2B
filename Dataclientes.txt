@@ -1,0 +1,26 @@
+NOME                              EMAIL                                             AVALIAÇÃO      SENHA
+Amanda Julião=====================AmandaJu@gmail.com================================5,0============Amanda@12345
+Lucas da Silva====================LSilva@outlook.com================================4,2============LSil#2022
+Samuel Lopez======================SamuLopez@gmail.com===============================4,6============Lopez@qwerty
+José Pereira======================JPereira1@hotmail.com=============================4,5============Pereira123@
+João Rodriguez====================Rodriguez22@gmail.com=============================4,8============Rodriguez22@123
+Luís Salvador=====================SalvadorL13@gmail.com=============================4,5============Salvador#1306
+Cristina Guimarães================Crist0702@outlook.com=============================5,0============Cristina@0702
+Paula Ferreira====================Paulinha01@gmail.com==============================4,7============PFerreira@qwerty
+Ednaldo Pereira===================Edpereira@yahoo.com===============================5,0============EdnaldoP@12345
+Mario Silva=======================Mario64@yahoo.com=================================4,2============Mario@19850913
+Rodolfo Fernandez=================FernandezR@gmail.com==============================3,9============RFernandez@2022
+Rayssa Queiroz====================RayssaQ1@hotmail.com==============================4,3============Queiroz#17011997
+Sergio Galvão=====================Galvão123@gmail.com===============================4,7============Qwerty@123456
+Bianca Marinho====================BMarinho01@gmail.com==============================4,4============Marinho1405
+Carlos Borges=====================CarlosBT01@gmail.com==============================4,6============Carlos@B2406
+Paulo Vinícius da Silva===========PVini0307@outlook.com=============================4,9============Pvs@123456
+Julio Cesar=======================JulioCesar01@gmail.com============================4,1============JCesar#2022
+Pedro Henrique Ferraz=============PHFerraz2604@gmail.com============================4,4============PHFerraz@123
+Felipe Lima=======================Lipelima0301@hotmail.com==========================4,2============Lima0301#@
+Peter Santos======================PSantos123@yahoo.com==============================5,0============PeterSP@12345
+Erick Salazar=====================ESalazar01@gmail.com==============================4,1============ErickSM@2022
+Rafael Costa======================Rafacosta@gmail.com===============================4,2============RCosta@qwerty
+Bárbara Rocha=====================BárbaraR@gmail.com================================4,8============RochaB@1504
+Aurora Brito======================AuroraAB@gmail.com================================5,0============Aurora1@1900
+Dênis Vasconcelos=================DVasconcelos1@hotmail.com=========================4,3============DVasco1203@123
