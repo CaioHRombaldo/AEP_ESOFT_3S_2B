@@ -5,8 +5,8 @@
 
 struct endereco
 {
-    char cidade[256];
     char estado[256];
+    char cidade[256];
     char rua[256];
     char rua_numero[256];
     char rua_complemento[256];
@@ -26,9 +26,12 @@ struct usuario_cliente
     char nome[256];
     char email[256];
     char senha[256];
-
+	char cpf[256];
     char avaliacao[256];
+    char numero_celular[256];
+    char sexo;
     
+    struct endereco endereco_cliente[256];
 };
 
 struct usuario_prestador
@@ -40,7 +43,6 @@ struct usuario_prestador
     char profissao[256];
     char cpf[256];
     char sexo;
-
     char avaliacao[256];
 
     struct servico servicos_prestador[256];
