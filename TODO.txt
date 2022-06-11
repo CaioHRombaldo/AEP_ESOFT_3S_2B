@@ -19,3 +19,11 @@ Alterar senha
 ------------------------------------------------------
 
 Função de pesquisar prestador de serviço por serviço
+
+------------------------------------------------------
+
+Funções para validar:
+	Senhas
+	CPF
+	Telefone
+	Email
