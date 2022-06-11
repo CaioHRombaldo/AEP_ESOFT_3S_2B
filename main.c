@@ -26,8 +26,9 @@ struct usuario_cliente
     char nome[256];
     char email[256];
     char senha[256];
-	char cpf[256];
-    char avaliacao[256];
+	int cpf[256];
+    int avaliacaotot;
+    int avaliacaonum;
     char numero_celular[256];
     char sexo;
     
@@ -41,9 +42,10 @@ struct usuario_prestador
     char senha[256];
     char numero_celular[256];
     char profissao[256];
-    char cpf[256];
+    int cpf[256];
     char sexo;
-    char avaliacao[256];
+    int avaliacaotot;
+    int avaliacaonum;
 
     struct servico servicos_prestador[256];
     struct endereco endereco_prestador[256];

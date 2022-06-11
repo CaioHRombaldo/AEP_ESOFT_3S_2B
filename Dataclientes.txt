@@ -1,26 +1,26 @@
-NOME                              EMAIL                                             AVALIAÇÃO      SENHA                    SEXO
-Amanda Julião=====================AmandaJu@gmail.com================================5,0============Amanda@12345=============F
-Lucas da Silva====================LSilva@outlook.com================================4,2============LSil#2022================M
-Samuel Lopez======================SamuLopez@gmail.com===============================4,6============Lopez@qwerty=============M
-José Pereira======================JPereira1@hotmail.com=============================4,5============Pereira123@==============M
-João Rodriguez====================Rodriguez22@gmail.com=============================4,8============Rodriguez22@123==========0
-Luís Salvador=====================SalvadorL13@gmail.com=============================4,5============Salvador#1306============M
-Cristina Guimarães================Crist0702@outlook.com=============================5,0============Cristina@0702============F
-Paula Ferreira====================Paulinha01@gmail.com==============================4,7============PFerreira@qwerty=========M
-Ednaldo Pereira===================Edpereira@yahoo.com===============================5,0============EdnaldoP@12345===========M
-Mario Silva=======================Mario64@yahoo.com=================================4,2============Mario@19850913===========0
-Rodolfo Fernandez=================FernandezR@gmail.com==============================3,9============RFernandez@2022==========M
-Rayssa Queiroz====================RayssaQ1@hotmail.com==============================4,3============Queiroz#17011997=========F
-Sergio Galvão=====================Galvão123@gmail.com===============================4,7============Qwerty@123456============M
-Bianca Marinho====================BMarinho01@gmail.com==============================4,4============Marinho1405==============0
-Carlos Borges=====================CarlosBT01@gmail.com==============================4,6============Carlos@B2406=============M
-Paulo Vinícius da Silva===========PVini0307@outlook.com=============================4,9============Pvs@123456===============0
-Julio Cesar=======================JulioCesar01@gmail.com============================4,1============JCesar#2022==============M
-Pedro Henrique Ferraz=============PHFerraz2604@gmail.com============================4,4============PHFerraz@123=============M
-Felipe Lima=======================Lipelima0301@hotmail.com==========================4,2============Lima0301#@===============M
-Peter Santos======================PSantos123@yahoo.com==============================5,0============PeterSP@12345============M
-Erick Salazar=====================ESalazar01@gmail.com==============================4,1============ErickSM@2022=============0
-Rafael Costa======================Rafacosta@gmail.com===============================4,2============RCosta@qwerty============M
-Bárbara Rocha=====================BárbaraR@gmail.com================================4,8============RochaB@1504==============F
-Aurora Brito======================AuroraAB@gmail.com================================5,0============Aurora1@1900=============F
-Dênis Vasconcelos=================DVasconcelos1@hotmail.com=========================4,3============DVasco1203@123===========M
+NOME                              EMAIL                                             SEXO CPF
+Amanda Julião=====================AmandaJu@gmail.com================================F====24838485085
+Lucas da Silva====================LSilva@outlook.com================================M====01959087088
+Samuel Lopez======================SamuLopez@gmail.com===============================M====73289757099
+José Pereira======================JPereira1@hotmail.com=============================M====55008183095
+João Rodriguez====================Rodriguez22@gmail.com=============================0====23292822068
+Luís Salvador=====================SalvadorL13@gmail.com=============================M====76886584030
+Cristina Guimarães================Crist0702@outlook.com=============================F====39971274094
+Paula Ferreira====================Paulinha01@gmail.com==============================M====33339900086
+Ednaldo Pereira===================Edpereira@yahoo.com===============================M====64520772010
+Mario Silva=======================Mario64@yahoo.com=================================0====98050522067
+Rodolfo Fernandez=================FernandezR@gmail.com==============================M====10297927043
+Rayssa Queiroz====================RayssaQ1@hotmail.com==============================F====83131833068
+Sergio Galvão=====================Galvão123@gmail.com===============================M====44316735047
+Bianca Marinho====================BMarinho01@gmail.com==============================0====90485010089
+Carlos Borges=====================CarlosBT01@gmail.com==============================M====43536887074
+Paulo Vinícius da Silva===========PVini0307@outlook.com=============================0====89183365001
+Julio Cesar=======================JulioCesar01@gmail.com============================M====18769890099
+Pedro Henrique Ferraz=============PHFerraz2604@gmail.com============================M====82210996007
+Felipe Lima=======================Lipelima0301@hotmail.com==========================M====94053476089
+Peter Santos======================PSantos123@yahoo.com==============================M====75600171005
+Erick Salazar=====================ESalazar01@gmail.com==============================0====02399992075
+Rafael Costa======================Rafacosta@gmail.com===============================M====87987173088
+Bárbara Rocha=====================BárbaraR@gmail.com================================F====97327012001
+Aurora Brito======================AuroraAB@gmail.com================================F====99156547072
+Dênis Vasconcelos=================DVasconcelos1@hotmail.com=========================M====13007194008
