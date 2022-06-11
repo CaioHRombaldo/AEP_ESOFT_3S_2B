@@ -1,0 +1,26 @@
+NOME                              EMAIL                                             SEXO CPF
+Amanda Julião=====================AmandaJu@gmail.com================================F====24838485085
+Lucas da Silva====================LSilva@outlook.com================================M====01959087088
+Samuel Lopez======================SamuLopez@gmail.com===============================M====73289757099
+José Pereira======================JPereira1@hotmail.com=============================M====55008183095
+João Rodriguez====================Rodriguez22@gmail.com=============================0====23292822068
+Luís Salvador=====================SalvadorL13@gmail.com=============================M====76886584030
+Cristina Guimarães================Crist0702@outlook.com=============================F====39971274094
+Paula Ferreira====================Paulinha01@gmail.com==============================M====33339900086
+Ednaldo Pereira===================Edpereira@yahoo.com===============================M====64520772010
+Mario Silva=======================Mario64@yahoo.com=================================0====98050522067
+Rodolfo Fernandez=================FernandezR@gmail.com==============================M====10297927043
+Rayssa Queiroz====================RayssaQ1@hotmail.com==============================F====83131833068
+Sergio Galvão=====================Galvão123@gmail.com===============================M====44316735047
+Bianca Marinho====================BMarinho01@gmail.com==============================0====90485010089
+Carlos Borges=====================CarlosBT01@gmail.com==============================M====43536887074
+Paulo Vinícius da Silva===========PVini0307@outlook.com=============================0====89183365001
+Julio Cesar=======================JulioCesar01@gmail.com============================M====18769890099
+Pedro Henrique Ferraz=============PHFerraz2604@gmail.com============================M====82210996007
+Felipe Lima=======================Lipelima0301@hotmail.com==========================M====94053476089
+Peter Santos======================PSantos123@yahoo.com==============================M====75600171005
+Erick Salazar=====================ESalazar01@gmail.com==============================0====02399992075
+Rafael Costa======================Rafacosta@gmail.com===============================M====87987173088
+Bárbara Rocha=====================BárbaraR@gmail.com================================F====97327012001
+Aurora Brito======================AuroraAB@gmail.com================================F====99156547072
+Dênis Vasconcelos=================DVasconcelos1@hotmail.com=========================M====13007194008
