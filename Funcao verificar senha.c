@@ -9,6 +9,7 @@ char senha[256];
 int verify = 0;
 
 int main(){
+	gets(senha);
 	verifica = verificasenha(senha);
 	if (verifica == true){
 		printf("A senha e valida.");
@@ -22,13 +23,12 @@ bool verificasenha(char str1[]){
 	//int verify = 0;
 	int tam = strlen(str1);
 	//Verifica se o tamanho da senha é superior ou igual a 8 caracteres, caso contrário retorna falso.
-	if (tam >= 8){
+	if (tam >= 8 && tam <=32){
 		//Verifica se existe algum caracter especial na senha.
 		for(int i=0;i<tam;i++){
 			if((str1[i] > 32 && str1[i] < 48) || str1[i] > 57 && str1[i] < 65){
 				verify++;
 				i = tam;
-				printf("1");
 			}
 		}
 		//Verifica se existe alguma letra minúscula na senha.
@@ -36,7 +36,6 @@ bool verificasenha(char str1[]){
 			if(str1[i]>96 && str1[i]<123){
 				verify++;
 				i = tam;
-				printf("2");
 			}
 		}
 		//Verifica se existe alguma letra maiúscula na senha.
@@ -44,7 +43,6 @@ bool verificasenha(char str1[]){
 			if(str1[i]>64 && str1[i] < 91){
 				verify++;
 				i = tam;
-				printf("3");
 			}
 		}
 		//Verifica se existe algum número na senha.
@@ -52,7 +50,6 @@ bool verificasenha(char str1[]){
 			if(str1[i]>47 && str1[i] < 58){
 				verify++;
 				i = tam;
-				printf("4");
 			}
 		}
 		/*Caso todas as verificações sejam positivas, verify será igual a 4 e retornará
