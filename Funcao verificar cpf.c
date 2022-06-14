@@ -34,14 +34,14 @@ bool verificacpf(){
 	}
 	system("pause");
 	confirma = calccpf(9,cpfnum);
-	if (confirma == cpfnum[9]){
+	if (confirma == cpfnum[9]){ //confirma se o 10 digito do cpf é valido.
 		valido++;
 	}
 	confirma = calccpf(10,cpfnum);
-	if(confirma == cpfnum[10]){
+	if(confirma == cpfnum[10]){ //confirma se o 11 digito do cpf é valido.
 		valido++;
 	}
-	for(int i=0; i<11; i++){
+	for(int i=0; i<11; i++){ //confirma se o cpf não é uma sequencia de numeros iguais.
 		if(cpfnum[0] == cpfnum[i]){
 			igualdade++;
 		}
@@ -58,7 +58,7 @@ bool verificacpf(){
 	
 }
 
-int calccpf(int parar, int cpftemp[]){
+int calccpf(int parar, int cpftemp[]){ //calcula o digito correto do cpf(10 e 11).
 	int cont = 0;
     for(int i=0; i < parar;i++){
         cont = cont + (cpftemp[i] * ((parar+1)-i));      
