@@ -2,7 +2,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <locale.h>
-
+#include <stdbool.h>
+#include <conio.h>
+#include <time.h>
 
 struct endereco
 {
@@ -11,7 +13,6 @@ struct endereco
     char rua[256];
     char rua_numero[256];
     char rua_complemento[256];
-
 };
 
 struct servico
@@ -19,7 +20,6 @@ struct servico
     char nome[256];
     char categoria[256][256];
     char valor_medio[256];
-
 };
 
 struct usuario_cliente
@@ -27,12 +27,12 @@ struct usuario_cliente
     char nome[34];
     char email[50];
     char senha[32];
-	char cpf[11];
-    int avaliacaotot;
-    int avaliacaonum;
-    char numero_celular[256];
+    char cpf[11];
+    char avaliacaotot[7];
+    char avaliacaonum[7];
+    char numero_celular[14];
     char sexo[5];
-    
+
     struct endereco endereco_cliente[32];
 };
 
@@ -41,17 +41,15 @@ struct usuario_prestador
     char nome[34];
     char email[50];
     char senha[32];
-    char numero_celular[256];
+    char numero_celular[14];
     char profissao[256];
     char cpf[11];
     char sexo[5];
-    int avaliacaotot;
-    int avaliacaonum;
+    char avaliacaotot[7];
+    char avaliacaonum[7];
 
     struct servico servicos_prestador[32];
     struct endereco endereco_prestador[32];
-    
-
 };
 
 // Declaração de Variaveis Globais:
@@ -65,10 +63,13 @@ char cpf_temp[11];
 
 // Fim Declaração de Variaveis Globais
 
-int BuscaClienteCPF(char* cpf){
+int BuscaClienteCPF(char *cpf)
+{
     int count = 0;
-    for(count = 0; count<totClientes; count++){
-        if(strcmp(clientes[count].cpf, cpf) == 0){
+    for (count = 0; count < totClientes; count++)
+    {
+        if (strcmp(clientes[count].cpf, cpf) == 0)
+        {
             return count;
         }
     }
@@ -76,100 +77,177 @@ int BuscaClienteCPF(char* cpf){
     return -1;
 }
 
-void LeCampo(char* campo, int ini, int fim, char* linha){
+void LeCampo(char *campo, int ini, int fim, char *linha)
+{
     // Separa o campo
     int c = 0;
-    for(c = ini; c <= fim; c++){
-        campo[c-ini] = linha[c];
+    for (c = ini; c <= fim; c++)
+    {
+        campo[c - ini] = linha[c];
     }
 
     // Remove os caracteres vazios
     int tam = fim - ini;
 
-    while(campo[tam] == '=' || campo[tam] == ' '){
+    while (campo[tam] == '=' || campo[tam] == ' ')
+    {
         campo[tam] = '\0';
         tam--;
     }
-
 }
 
-void CargaDeDadosEditaveisClientes(){
+void CargaDeDadosEditaveisClientes()
+{
     FILE *arq;
     char linha[78];
     char *result;
     int count = 0;
     int cliente_id;
 
-    arq = fopen("Dataclienteedit.txt","r");
-    
-    if(arq == NULL) {
+    arq = fopen("Dataclienteedit.txt", "r");
+
+    if (arq == NULL)
+    {
         printf("Problema ao abrir o arquivo editavel.\n");
         return;
-
-    } else {
-        while(!feof(arq)){
+    }
+    else
+    {
+        while (!feof(arq))
+        {
 
             result = fgets(linha, 78, arq);
 
-            if (result){
+            if (result)
+            {
                 LeCampo(cpf_temp, 65, 75, linha);
                 cliente_id = BuscaClienteCPF(cpf_temp);
-                
-                if (cliente_id != -1){
+
+                if (cliente_id != -1)
+                {
+                    // SENHA                             Atot  Anum  NCelular           CPF
                     LeCampo(clientes[cliente_id].senha, 0, 32, linha);
-
+                    LeCampo(clientes[cliente_id].avaliacaotot, 33, 38, linha);
+                    LeCampo(clientes[cliente_id].avaliacaonum, 39, 44, linha);
+                    LeCampo(clientes[cliente_id].numero_celular, 45, 63, linha);
                 }
-
             }
-
         }
-
     }
-    
 }
 
-void CargaDeDadosClientes(){
+void CargaDeDadosClientes()
+{
     FILE *arq;
     char linha[102];
     char *result;
 
-    arq = fopen("Dataclientes.txt","r");
-    
-    if(arq == NULL) {
+    arq = fopen("Dataclientes.txt", "r");
+
+    if (arq == NULL)
+    {
         printf("Problema ao abrir o arquivo.\n");
         return;
-
-    } else {
-        while(!feof(arq)){
+    }
+    else
+    {
+        while (!feof(arq))
+        {
 
             result = fgets(linha, 102, arq);
 
-            if (result){
+            if (result)
+            {
                 LeCampo(clientes[totClientes].nome, 0, 32, linha);
                 LeCampo(clientes[totClientes].email, 34, 83, linha);
                 LeCampo(clientes[totClientes].sexo, 84, 88, linha);
                 LeCampo(clientes[totClientes].cpf, 89, 99, linha);
-            
             }
             totClientes++;
         }
         CargaDeDadosEditaveisClientes();
-
     }
 }
 
+void CadastrarCliente(){
+	char temp_mail[256];
+	char temp_senha[256];
+	char temp_confirma_senha[256];
+	bool escape;
+	
+	printf("Cadastre-se como cliente");
+	
+	do{
+		printf("\nInsira um email valido: ");
+		gets(temp_mail);
+	}while(EmailValido(temp_mail) == false);
+	
+	do{
+		printf("\nInsira uma senha valida: ");
+		gets(temp_senha);
+		if(SenhaValida(temp_senha) == true){
+			printf("\nInsira a senha novamente para confirmar: ");
+			gets(temp_confirma_senha);
+			
+			if(strcmp(temp_senha, temp_confirma_senha) == 0)
+				escape = true;
+		}
+		else{
+			system("cls");
+			printf("Senha invalida, tente novamente");
+			
+		}
+	}while(escape == false);
+}
 
-int main(){
-    setlocale (LC_ALL, "");
-    setlocale (LC_CTYPE, "pt_BR.UTF-8");
-    
-    printf("Compilei!!\n");
+void CadastrarUsuario(){
+	int escolha_usuario;
+	bool escape = false;
+	
+	while(escape == false){
+		printf("Como deseja utilizar a sua conta? \n");
+		printf("1 - Cliente\n");
+		printf("2 - Prestador de servico\n");
+		
+		scanf("%d",&escolha_usuario);
+		
+		switch(escolha_usuario){
+			case 1:
+				CadastrarCliente();
+				escape = true;		
+				break;
+			case 2:
+//				CadastrarPrestador();
+				escape = true;
+				break;
+			default:
+				system("cls");
+				printf("Opcao invalida, tente novamente.\n");
+				break;
+		}
+	}
+}
+//	do{
+
+//	}while(getch() != '1' || getch() ) 
+	
+
+int main()
+{
+    setlocale(LC_ALL, "");
+    setlocale(LC_CTYPE, "pt_BR.UTF-8");
+
+//    printf("Compilei!!\n");
     CargaDeDadosClientes();
-    printf("nome: %s\n", clientes[1].nome);
-    printf("email: %s\n", clientes[1].email);
-    printf("cpf: %s\n", clientes[1].cpf);
-    printf("sexo: %s\n", clientes[1].sexo);
-    printf("SENHA: %s\n", clientes[1].senha);
+    CadastrarUsuario();
+//    printf("nome: %s\n", clientes[1].nome);
+//    printf("email: %s\n", clientes[1].email);
+//    printf("cpf: %s\n", clientes[1].cpf);
+//    printf("sexo: %s\n", clientes[1].sexo);
+//    printf("SENHA: %s\n", clientes[1].senha);
+//    printf("tot avaliacoes: %s\n", clientes[1].avaliacaotot);
+//    printf("num avaliacoes: %s\n", clientes[1].avaliacaonum);
+//    printf("num celular: %s\n", clientes[1].numero_celular);
 
-    return 0;
+        return 0;
 }
