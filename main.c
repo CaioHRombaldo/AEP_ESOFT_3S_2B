@@ -2,6 +2,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <locale.h>
+#include <stdbool.h>
+#include <conio.h>
+#include <time.h>
 
 struct endereco
 {
@@ -27,7 +30,7 @@ struct usuario_cliente
     char cpf[11];
     char avaliacaotot[7];
     char avaliacaonum[7];
-    char numero_celular[256];
+    char numero_celular[14];
     char sexo[5];
 
     struct endereco endereco_cliente[32];
@@ -38,7 +41,7 @@ struct usuario_prestador
     char nome[34];
     char email[50];
     char senha[32];
-    char numero_celular[256];
+    char numero_celular[14];
     char profissao[256];
     char cpf[11];
     char sexo[5];
@@ -166,21 +169,85 @@ void CargaDeDadosClientes()
     }
 }
 
+void CadastrarCliente(){
+	char temp_mail[256];
+	char temp_senha[256];
+	char temp_confirma_senha[256];
+	bool escape;
+	
+	printf("Cadastre-se como cliente");
+	
+	do{
+		printf("\nInsira um email valido: ");
+		gets(temp_mail);
+	}while(EmailValido(temp_mail) == false);
+	
+	do{
+		printf("\nInsira uma senha valida: ");
+		gets(temp_senha);
+		if(SenhaValida(temp_senha) == true){
+			printf("\nInsira a senha novamente para confirmar: ");
+			gets(temp_confirma_senha);
+			
+			if(strcmp(temp_senha, temp_confirma_senha) == 0)
+				escape = true;
+		}
+		else{
+			system("cls");
+			printf("Senha invalida, tente novamente");
+			
+		}
+	}while(escape == false);
+}
+
+void CadastrarUsuario(){
+	int escolha_usuario;
+	bool escape = false;
+	
+	while(escape == false){
+		printf("Como deseja utilizar a sua conta? \n");
+		printf("1 - Cliente\n");
+		printf("2 - Prestador de servico\n");
+		
+		scanf("%d",&escolha_usuario);
+		
+		switch(escolha_usuario){
+			case 1:
+				CadastrarCliente();
+				escape = true;		
+				break;
+			case 2:
+//				CadastrarPrestador();
+				escape = true;
+				break;
+			default:
+				system("cls");
+				printf("Opcao invalida, tente novamente.\n");
+				break;
+		}
+	}
+}
+//	do{
+
+//	}while(getch() != '1' || getch() ) 
+	
+
 int main()
 {
     setlocale(LC_ALL, "");
     setlocale(LC_CTYPE, "pt_BR.UTF-8");
 
-    printf("Compilei!!\n");
+//    printf("Compilei!!\n");
     CargaDeDadosClientes();
-    printf("nome: %s\n", clientes[1].nome);
-    printf("email: %s\n", clientes[1].email);
-    printf("cpf: %s\n", clientes[1].cpf);
-    printf("sexo: %s\n", clientes[1].sexo);
-    printf("SENHA: %s\n", clientes[1].senha);
-    printf("tot avaliacoes: %s\n", clientes[1].avaliacaotot);
-    printf("num avaliacoes: %s\n", clientes[1].avaliacaonum);
-    printf("num celular: %s\n", clientes[1].numero_celular);
+    CadastrarUsuario();
+//    printf("nome: %s\n", clientes[1].nome);
+//    printf("email: %s\n", clientes[1].email);
+//    printf("cpf: %s\n", clientes[1].cpf);
+//    printf("sexo: %s\n", clientes[1].sexo);
+//    printf("SENHA: %s\n", clientes[1].senha);
+//    printf("tot avaliacoes: %s\n", clientes[1].avaliacaotot);
+//    printf("num avaliacoes: %s\n", clientes[1].avaliacaonum);
+//    printf("num celular: %s\n", clientes[1].numero_celular);
 
         return 0;
 }
