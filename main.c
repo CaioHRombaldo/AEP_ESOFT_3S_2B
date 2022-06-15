@@ -63,6 +63,78 @@ char cpf_temp[11];
 
 // Fim Declaração de Variaveis Globais
 
+bool verificaemail(char str1[]){
+	int tam = strlen(str1);
+	int arbpos,arbverify = 0,dotverify;
+	for(int i=0;i<tam;i++){ // procura pela existencia de um @ na string do email.
+		if(str1[i] == '@'){
+			arbverify++;
+			arbpos = i+1;
+		}
+	}
+	if(arbverify == 1 && str1[arbpos] != '.'){ //caso exista apenas um @ e o mesmo não seja seguido de pontuação.
+		while(arbpos < tam){
+			if(str1[arbpos] == '.'){ //caso exista uma pontuação apos a detecção de um @ e a mesma não seja seguida
+				if(str1[arbpos+1] != '\0'){ // de um '\0', retorne true.
+					return true;
+				}
+			}
+			arbpos++;
+		}
+		return false;
+	}
+	else{
+		return false;
+	}
+}
+
+bool verificasenha(char str1[]){
+	//int verify = 0;
+	int tam = strlen(str1);
+	//Verifica se o tamanho da senha é superior ou igual a 8 caracteres, caso contrário retorna falso.
+	if (tam >= 8 && tam <=32){
+		//Verifica se existe algum caracter especial na senha.
+		for(int i=0;i<tam;i++){
+			if((str1[i] > 32 && str1[i] < 48) || str1[i] > 57 && str1[i] < 65){
+				verify++;
+				i = tam;
+			}
+		}
+		//Verifica se existe alguma letra minúscula na senha.
+		for(int i=0;i<tam;i++){
+			if(str1[i]>96 && str1[i]<123){
+				verify++;
+				i = tam;
+			}
+		}
+		//Verifica se existe alguma letra maiúscula na senha.
+		for(int i=0;i<tam;i++){
+			if(str1[i]>64 && str1[i] < 91){
+				verify++;
+				i = tam;
+			}
+		}
+		//Verifica se existe algum número na senha.
+		for(int i=0;i<tam;i++){
+			if(str1[i]>47 && str1[i] < 58){
+				verify++;
+				i = tam;
+			}
+		}
+		/*Caso todas as verificações sejam positivas, verify será igual a 4 e retornará
+		true, caso contrário retornará false.*/
+		if (verify == 4){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	else{
+		return false;
+	}
+}
+
 int BuscaClienteCPF(char *cpf)
 {
     int count = 0;
@@ -125,7 +197,6 @@ void CargaDeDadosEditaveisClientes()
 
                 if (cliente_id != -1)
                 {
-                    // SENHA                             Atot  Anum  NCelular           CPF
                     LeCampo(clientes[cliente_id].senha, 0, 32, linha);
                     LeCampo(clientes[cliente_id].avaliacaotot, 33, 38, linha);
                     LeCampo(clientes[cliente_id].avaliacaonum, 39, 44, linha);
@@ -180,7 +251,7 @@ void CadastrarCliente(){
 	do{
 		printf("\nInsira um email valido: ");
 		gets(temp_mail);
-	}while(EmailValido(temp_mail) == false);
+	}while(verificaemail(temp_mail) == false);
 	
 	do{
 		printf("\nInsira uma senha valida: ");
