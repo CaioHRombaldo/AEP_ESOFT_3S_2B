@@ -63,6 +63,28 @@ char cpf_temp[11];
 
 // Fim Declaração de Variaveis Globais
 
+void CriaClienteBanco(int id){
+    
+    FILE *arq, *arq_edit;
+
+    char str_cliente[128];
+    char str_edit[128];
+    char str_endereco[128];
+
+    arq = fopen("Dataclientes.txt", "a+");
+
+    if (arq == NULL || arq_edit == NULL)
+    {
+        printf("Problema ao abrir o arquivo.\n");
+    }
+    else
+    {
+        fputs(str_cliente, arq);
+        fputs(str_edit, arq_edit);
+        fputs(str_endereco, arq_endereco);
+    }
+}
+
 bool verificacpf(char *cpf){
 	int cpfnum[11];
 	int i, confirma,valido = 0, igualdade = 0;
@@ -289,6 +311,7 @@ void CargaDeDadosClientes()
 }
 
 void CadastrarCliente(){
+    char temp_nome[256];
 	char temp_mail[256];
 	char temp_senha[256];
 	char temp_confirma_senha[256];
@@ -306,6 +329,10 @@ void CadastrarCliente(){
     system("cls");
 
 	printf("Cadastre-se como cliente");
+
+    printf("\n Insira seu nome: ");
+    fflush(stdin);
+    gets(temp_nome);
 	
 	do{
 		printf("\nInsira um email valido: ");
@@ -339,14 +366,17 @@ void CadastrarCliente(){
     fflush(stdin);
     gets(temp_cidade);
 
-    printf("\nInsira o seu endereço residencial: ");
+    printf("\nInsira o seu endereco residencial: ");
     fflush(stdin);
     gets(temp_endereco);
 
     escape == false;
+    escolha_usuario = 0;
     while(escape == false){
         printf("\nEscolha o complemento: ");
         printf("\n1 - Casa\n2 - Apartamento\n3 - Condomínio");
+        fflush(stdin);
+        scanf("%d",&escolha_usuario);
 
         switch (escolha_usuario){
         case 1:
@@ -379,6 +409,46 @@ void CadastrarCliente(){
         gets(temp_cpf);
     }while(verificacpf(temp_cpf) == false);
 
+    escape = false;
+    escolha_usuario = 0;
+    while (escape == false)
+    {
+        printf("\nEscolha o seu sexo: ");
+        printf("\n1 - Feminino\n2 - Masculino\n3 - Prefiro nao informar");
+        fflush(stdin);
+        scanf("%d",&escolha_usuario);
+
+        switch (escolha_usuario)
+        {
+        case 1:
+            temp_sexo = 'F';
+            escape = true;
+            break;
+        case 2:
+            temp_sexo = 'M';
+            escape = true;
+            break;
+        case 3:
+            temp_sexo = '0';
+            escape = true;
+            break;
+        default:
+            system("cls");
+            printf("Escolha uma opcao valida.");
+            break;
+        }
+    }
+    
+    totClientes++;
+    strcpy(clientes[totClientes].nome, temp_nome);
+    strcpy(clientes[totClientes].email, temp_email);
+    strcpy(clientes[totClientes].senha, temp_senha);
+    strcpy(clientes[totClientes].cpf, temp_cpf);
+    strcpy(clientes[totClientes].avaliacaonum, '0');
+    strcpy(clientes[totClientes].avaliacaotot, '0');
+    strcpy(clientes[totClientes].numero_celular, temp_numero_celular);
+    strcpy(clientes[totClientes].sexo, temp_sexo);
+    CriaClienteBanco(totClientes);
 
 }
 
@@ -418,14 +488,14 @@ int main()
     CargaDeDadosClientes();
     //CadastrarUsuario();
 
-    printf("nome: %s\n", clientes[1].nome);
-    printf("email: %s\n", clientes[1].email);
-    printf("cpf: %s\n", clientes[1].cpf);
-    printf("sexo: %s\n", clientes[1].sexo);
-    printf("SENHA: %s\n", clientes[1].senha);
-    printf("Total Avaliacoes: %s\n", clientes[1].avaliacaotot);
-    printf("Numero Avaliacoes: %s\n", clientes[1].avaliacaonum);
-    printf("Numero Celular: %s\n", clientes[1].numero_celular);
+    //printf("nome: %s\n", clientes[1].nome);
+    //printf("email: %s\n", clientes[1].email);
+    //printf("cpf: %s\n", clientes[1].cpf);
+    //printf("sexo: %s\n", clientes[1].sexo);
+    //printf("SENHA: %s\n", clientes[1].senha);
+    //printf("Total Avaliacoes: %s\n", clientes[1].avaliacaotot);
+    //printf("Numero Avaliacoes: %s\n", clientes[1].avaliacaonum);
+    //printf("Numero Celular: %s\n", clientes[1].numero_celular);
 
         return 0;
 }
