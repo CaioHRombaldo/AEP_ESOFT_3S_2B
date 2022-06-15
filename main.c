@@ -90,13 +90,79 @@ void CriaClienteBanco(char *str_cliente, char *str_cliente_edit, char tipo){
     CargaDeDadosClientes();
 }
 
-void DeletaUsuarioBanco(char *cpf, int tipo){
+void DeletaDadosEditaveisCliente(char *cpf){
+    FILE *arq;
+    char linha[78];
+    char *result;
+
+    arq = fopen("Dataclienteedit.txt", "r+");
+    
+
+    if (arq == NULL)
+    {
+        printf("Problema ao abrir o arquivo Deletando dados editaveis Cliente.\n");
+        return;
+    }
+    else
+    {
+        while (!feof(arq))
+        {
+
+            result = fgets(linha, 78, arq);
+            
+            if (result)
+            {
+                LeCampo(cpf_temp, 65, 75, linha);
+
+                if(strcmp(cpf_temp, cpf) == 0){
+                    fseek(arq, -78, SEEK_CUR);
+                    fputs("                                                                            ", arq);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void DeletaDadosEditaveisPS(char *cpf){
+    FILE *arq;
+    char linha[112];
+    char *result;
+
+    arq = fopen("Datapsedit.txt", "r+");
+
+    if (arq == NULL)
+    {
+        printf("Problema ao abrir o arquivo.\n");
+        return;
+    }
+    else
+    {
+        while (!feof(arq))
+        {
+
+            result = fgets(linha, 112, arq);
+            
+            if (result)
+            {
+                LeCampo(cpf_temp, 99, 109, linha);
+
+                if(strcmp(cpf_temp, cpf) == 0){
+                    fseek(arq, -112, SEEK_CUR);
+                    fputs("                                                                                                              ", arq);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void DeletarUsuarioBancoCliente(char *cpf){
     FILE *arq;
     char linha[102];
     char *result;
-    int cliente_id, posicao;
 
-    arq = fopen("Dataclientes.txt", "r");
+    arq = fopen("Dataclientes.txt", "r+");
 
     if (arq == NULL)
     {
@@ -114,13 +180,48 @@ void DeletaUsuarioBanco(char *cpf, int tipo){
             {
                 LeCampo(cpf_temp, 89, 99, linha);
 
-                if(strcmp(cpf_temp, "73289757099") == 0){
-                    posicao = ftell(arq);
-                    printf("pos: %d", posicao);
+                if(strcmp(cpf_temp, cpf) == 0){
+                    fseek(arq, -102, SEEK_CUR);
+                    fputs("                                                                                                    ", arq);
+                    break;
                 }
             }
         }
-        //CargaDeDadosEditaveisClientes();
+        DeletaDadosEditaveisCliente(cpf);
+    }
+}
+
+void DeletarUsuarioBancoPS(char *cpf){
+    FILE *arq;
+    char linha[102];
+    char *result;
+
+    arq = fopen("Dataps.txt", "r+");
+
+    if (arq == NULL)
+    {
+        printf("Problema ao abrir o arquivo.\n");
+        return;
+    }
+    else
+    {
+        while (!feof(arq))
+        {
+
+            result = fgets(linha, 102, arq);
+            
+            if (result)
+            {
+                LeCampo(cpf_temp, 89, 99, linha);
+
+                if(strcmp(cpf_temp, cpf) == 0){
+                    fseek(arq, -102, SEEK_CUR);
+                    fputs("                                                                                                      ", arq);
+                    break;
+                }
+            }
+        }
+        DeletaDadosEditaveisPS(cpf);
     }
 }
 
@@ -563,8 +664,8 @@ int main()
     setlocale(LC_CTYPE, "pt_BR.UTF-8");
 
     //CargaDeDadosClientes();
-    //CadastrarUsuarioEscolha();
-    DeletaUsuarioBanco("123", 1);
+    //CadastrarUsuarioEscolha();    
+    DeletarUsuarioBancoPS("07526069135");
 
     return 0;
 }
