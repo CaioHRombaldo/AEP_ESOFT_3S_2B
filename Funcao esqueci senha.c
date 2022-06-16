@@ -11,20 +11,20 @@ void menucodigosenha();
 int main(){
 	char senha[32]; //senha a ser importada do txt.
 	srand(time(NULL));
-	gets(senha); //simulação da senha que será importada.
-	esquecisenha(senha); //chamar a função da "tela" de esqueci minha senha.
+	gets(senha); //simulaï¿½ï¿½o da senha que serï¿½ importada.
+	esquecisenha(senha); //chamar a funï¿½ï¿½o da "tela" de esqueci minha senha.
 	//printf("%s", senha); printar senha alterada.
 	system("pause");
  } 
 
 void esquecisenha(char* str1){
 	int i = 0;
-	menucodigosenha(); //Geração de código aleatório e confirmação do mesmo.
+	menucodigosenha(); //Geraï¿½ï¿½o de cï¿½digo aleatï¿½rio e confirmaï¿½ï¿½o do mesmo.
 	printf("Digite sua nova senha: ");
 	fflush(stdin);
-	while(str1[i] != 13){ //Condição de parada = usuário apertar enter.
+	while(str1[i] != 13){ //Condiï¿½ï¿½o de parada = usuï¿½rio apertar enter.
 		str1[i] = getch();
-		if(str1[i] != 8 && str1[i] != 13 && i<32){ //Limitar os caracteres da nova senha até 32
+		if(str1[i] != 8 && str1[i] != 13 && i<32){ //Limitar os caracteres da nova senha atï¿½ 32
 			putchar('*'); //mascarar o que foi escrito com "*"
 			i++;
 		}
@@ -34,7 +34,7 @@ void esquecisenha(char* str1){
 			printf("\b \b");
 		}
 	}
-	str1[i] = '\0'; //Colocar um final na string de senha para não causar erro de memória.
+	str1[i] = '\0'; //Colocar um final na string de senha para nï¿½o causar erro de memï¿½ria.
 	printf("\nSenha atualizada com sucesso.\n");
 }
 
@@ -43,17 +43,17 @@ void menucodigosenha(){
 	char inputemail[128],email[128] = "teste";
 	char codigo[7] = " ", inputcodigo[7];
 	
-	for(int i=0;i<6;i++){
-		codigo[i] = (rand() % 10) + 48; //Geração de código aleatório.
+	for(i=0;i<6;i++){
+		codigo[i] = (rand() % 10) + 48; //Geraï¿½ï¿½o de cï¿½digo aleatï¿½rio.
 	}
 	codigo[6] = '\0';
 	printf("Informe o email da sua conta: ");
-	gets(inputemail); //Pegar input de email do usuário.
+	gets(inputemail); //Pegar input de email do usuï¿½rio.
 	fflush(stdin);
 	b = strcmp(inputemail,email); //Comparar com um email existente no txt
 	while(b != 0){
 		system("cls");
-		printf("email inexistente, por favor digite um email válido:");
+		printf("email inexistente, por favor digite um email vï¿½lido:");
 		gets(inputemail);
 		fflush(stdin);
 		b = strcmp(inputemail,email);
@@ -63,7 +63,7 @@ void menucodigosenha(){
 	printf("Codigo gerado e enviado ao email do usuario:%s\n",codigo);
 	printf("Codigo enviado com sucesso ao seu email!\n");
 	printf("Digite o codigo enviado: ");
-	while(a == 0){ //Pegar input do código digitado pelo usuário e comparar com o código real.
+	while(a == 0){ //Pegar input do cï¿½digo digitado pelo usuï¿½rio e comparar com o cï¿½digo real.
 		gets(inputcodigo);
 		if(strcmp(inputcodigo,codigo) == 0){
 			a = 1;

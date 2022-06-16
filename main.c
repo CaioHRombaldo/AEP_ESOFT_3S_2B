@@ -6,15 +6,6 @@
 #include <conio.h>
 #include <time.h>
 
-struct endereco
-{
-    char estado[256];
-    char cidade[256];
-    char rua[256];
-    char rua_numero[256];
-    char rua_complemento[256];
-};
-
 struct usuario_cliente
 {
     char nome[35];
@@ -25,8 +16,6 @@ struct usuario_cliente
     char avaliacaonum[8];
     char numero_celular[21];
     char sexo[6];
-
-    struct endereco endereco_cliente[32];
 };
 
 struct usuario_prestador
@@ -41,7 +30,6 @@ struct usuario_prestador
     char profissao[128];
     char sexo[6];
 
-    struct endereco endereco_prestador[32];
 };
 
 // Declaração de Variaveis Globais:
@@ -80,8 +68,6 @@ void CriaClienteBanco(char *str_cliente, char *str_cliente_edit, char tipo){
         arq = fopen("Dataps.txt", "a+");
         arq_edit = fopen("Datapsedit.txt", "a+");
     }
-    
-    //arq_endereco = fopen("Dataclienteendereco.txt", "a+");
 
     if (arq == NULL || arq_edit == NULL)
     {
@@ -91,7 +77,6 @@ void CriaClienteBanco(char *str_cliente, char *str_cliente_edit, char tipo){
     {
         fputs(str_cliente, arq);
         fputs(str_cliente_edit, arq_edit);
-        //fputs(str_cliente_endereco, arq_endereco);
     }
 
     CargaDeDadosClientes();
@@ -240,7 +225,6 @@ void EditarCampoBancoCliente(char *cpf, int pos, int tam, char *novo_dado){
     char tmp_novo_dado[128];
     strcpy(tmp_novo_dado, novo_dado);
     completastring(tmp_novo_dado, tam);
-    printf("%s", tmp_novo_dado);
 
     arq = fopen("Dataclienteedit.txt", "r+");
 
@@ -278,7 +262,6 @@ void EditarCampoBancoPrestador(char *cpf, int pos, int tam, char *novo_dado){
     char tmp_novo_dado[128];
     strcpy(tmp_novo_dado, novo_dado);
     completastring(tmp_novo_dado, tam);
-    printf("%s", tmp_novo_dado);
 
     arq = fopen("Datapsedit.txt", "r+");
 
@@ -442,12 +425,40 @@ int BuscaClienteCPF(char *cpf)
     return -1;
 }
 
+int BuscaClienteEmail(char *email)
+{
+    int count = 0;
+    for (count = 0; count < totClientes; count++)
+    {
+        if (strcmp(clientes[count].email, email) == 0)
+        {
+            return count;
+        }
+    }
+
+    return -1;
+}
+
 int BuscaPrestadorCPF(char *cpf)
 {
     int count = 0;
     for (count = 0; count < totPrestadores; count++)
     {
         if (strcmp(prestadores[count].cpf, cpf) == 0)
+        {
+            return count;
+        }
+    }
+
+    return -1;
+}
+
+int BuscaPrestadorEmail(char *email)
+{
+    int count = 0;
+    for (count = 0; count < totPrestadores; count++)
+    {
+        if (strcmp(prestadores[count].email, email) == 0)
         {
             return count;
         }
@@ -873,7 +884,7 @@ void menu_principal(){
                     break;
 				case '4':
 					verifyEscolha = true;
-					//funcEsqueciMinhaSenha
+					esquecisenha();
 				case '0':
 					exit(0);
 					break;
@@ -884,6 +895,75 @@ void menu_principal(){
 			}
 		}
 	}	
+}
+
+void esquecisenha(){
+	int i = 0;
+    char str1[128]; 
+	menucodigosenha(); //Gera��o de c�digo aleat�rio e confirma��o do mesmo.
+	printf("Digite sua nova senha: ");
+	fflush(stdin);
+	while(str1[i] != 13){ //Condi��o de parada = usu�rio apertar enter.
+		str1[i] = getch();
+		if(str1[i] != 8 && str1[i] != 13 && i<32){ //Limitar os caracteres da nova senha at� 32
+			putchar('*'); //mascarar o que foi escrito com "*"
+			i++;
+		}
+		if(str1[i] == 8 && i>0){ //remover as "*" por " "
+			str1[i] = '\0';
+			i--;
+			printf("\b \b");
+		}
+	}
+	str1[i] = '\0'; //Colocar um final na string de senha para n�o causar erro de mem�ria.
+    EditarCampoBancoCliente(cpf_logado, 78, 34, str1);
+
+	printf("\nSenha atualizada com sucesso.\n");
+}
+
+void menucodigosenha(){
+	int a = 0,b,i, count;
+	char inputemail[128];
+	char codigo[7] = " ", inputcodigo[7];
+    bool escape = false;
+	
+	for(i=0;i<6;i++){
+		codigo[i] = (rand() % 10) + 48; //Gera��o de c�digo aleat�rio.
+	}
+	codigo[6] = '\0';
+	
+    
+    do{
+        printf("Informe o email da sua conta: ");
+	    gets(inputemail); //Pegar input de email do usu�rio.
+	    fflush(stdin);
+
+        for(count = 0; count < totClientes; count++){
+            if(strcmp(inputemail, clientes[count].email) == 0){
+                strcmp(cpf_logado, clientes[count].cpf);
+                escape = true;
+                break;
+            }
+        }
+
+    }while(escape == false);
+
+	system("cls");
+	fflush(stdin);
+	printf("Codigo gerado e enviado ao email do usuario:%s\n",codigo);
+	printf("Codigo enviado com sucesso ao seu email!\n");
+	printf("Digite o codigo enviado: ");
+	while(a == 0){ //Pegar input do c�digo digitado pelo usu�rio e comparar com o c�digo real.
+		gets(inputcodigo);
+		if(strcmp(inputcodigo,codigo) == 0){
+			a = 1;
+		}
+		else{
+			system("cls");
+			printf("Codigo errado, por favor digite o codigo enviado ao seu email:");
+		}
+	}
+	
 }
 
 void menu_login_cliente(){
@@ -1019,17 +1099,17 @@ void menu_usuario(){
 			if(tipo_de_conta == 1){
                 EditarCampoBancoCliente(cpf_logado, 78, 34, esc_user);
             }else{
-
+                EditarCampoBancoPrestador(cpf_logado, 112, 34, esc_user);
             }
 			break;
         case '3':
-            printf("Digite a sua nova senha: ");
+            printf("Digite o seu novo numero: ");
             gets(esc_user);
 
             if(tipo_de_conta == 1){
-
+                EditarCampoBancoCliente(cpf_logado, 32, 19, esc_user);
             }else{
-                
+                EditarCampoBancoPrestador(cpf_logado, 66, 19, esc_user);
             }
             break;
 		case '4':
@@ -1063,8 +1143,8 @@ void menu_usuario(){
 int main()
 {
     
-    //setlocale(LC_ALL, "");
-    //setlocale(LC_CTYPE, "pt_BR.UTF-8");
+    setlocale(LC_ALL, "");
+    setlocale(LC_CTYPE, "pt_BR.UTF-8");
 
     CargaDeDadosClientes();
     CargaDeDadosPS();
