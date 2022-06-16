@@ -227,6 +227,44 @@ void DeletarUsuarioBancoPS(char *cpf){
     }
 }
 
+void EditarCampoBancoCliente(char *cpf, int pos, int tam, char *novo_dado){
+    FILE *arq;
+    char linha[78];
+    char *result;
+
+    char tmp_novo_dado[128];
+    strcpy(tmp_novo_dado, novo_dado);
+    completastring(tmp_novo_dado, tam);
+    printf("%s", tmp_novo_dado);
+
+    arq = fopen("Dataclienteedit.txt", "r+");
+
+    if (arq == NULL)
+    {
+        printf("Problema ao abrir o arquivo Editando dados editaveis Cliente.\n");
+        return;
+    }
+    else
+    {
+        while (!feof(arq))
+        {
+
+            result = fgets(linha, 78, arq);
+            
+            if (result)
+            {
+                LeCampo(cpf_temp, 65, 75, linha);
+
+                if(strcmp(cpf_temp, cpf) == 0){
+                    fseek(arq, -pos, SEEK_CUR);
+                    fputs(tmp_novo_dado, arq);
+                    break;
+                }
+            }
+        }
+    }
+}
+
 bool verificacpf(char *cpf){
 	int cpfnum[11];
 	int i, confirma,valido = 0, igualdade = 0;
@@ -766,7 +804,8 @@ int main()
 
     //CargaDeDadosClientes();
     //CadastrarUsuarioEscolha();    
-    DeletarUsuarioBancoPS("07526069135");
+    //DeletarUsuarioBancoPS("07526069135");
+    EditarCampoBancoCliente("01959087088", 78, 34, "SenhaDois");
 
     return 0;
 }
