@@ -38,7 +38,7 @@ struct usuario_prestador
     char avaliacaotot[8];
     char avaliacaonum[8];
     char numero_celular[21];
-    char profissao[256];
+    char profissao[128];
     char sexo[6];
 
     struct endereco endereco_prestador[32];
@@ -53,7 +53,12 @@ int totPrestadores = 0;
 
 char cpf_temp[12];
 
+char cpf_logado[12];
+int tipo_de_conta;
+
 bool login_status = false;
+
+bool parada_system = false;
 
 // Fim Declaração de Variaveis Globais
 
@@ -265,6 +270,44 @@ void EditarCampoBancoCliente(char *cpf, int pos, int tam, char *novo_dado){
     }
 }
 
+void EditarCampoBancoPrestador(char *cpf, int pos, int tam, char *novo_dado){
+    FILE *arq;
+    char linha[112];
+    char *result;
+
+    char tmp_novo_dado[128];
+    strcpy(tmp_novo_dado, novo_dado);
+    completastring(tmp_novo_dado, tam);
+    printf("%s", tmp_novo_dado);
+
+    arq = fopen("Datapsedit.txt", "r+");
+
+    if (arq == NULL)
+    {
+        printf("Problema ao abrir o arquivo Editando dados editaveis Prestador.\n");
+        return;
+    }
+    else
+    {
+        while (!feof(arq))
+        {
+
+            result = fgets(linha, 112, arq);
+            
+            if (result)
+            {
+                LeCampo(cpf_temp, 99, 109, linha);
+
+                if(strcmp(cpf_temp, cpf) == 0){
+                    fseek(arq, -pos, SEEK_CUR);
+                    fputs(tmp_novo_dado, arq);
+                    break;
+                }
+            }
+        }
+    }
+}
+
 bool verificacpf(char *cpf){
 	int cpfnum[11];
 	int i, confirma,valido = 0, igualdade = 0;
@@ -399,6 +442,20 @@ int BuscaClienteCPF(char *cpf)
     return -1;
 }
 
+int BuscaPrestadorCPF(char *cpf)
+{
+    int count = 0;
+    for (count = 0; count < totPrestadores; count++)
+    {
+        if (strcmp(prestadores[count].cpf, cpf) == 0)
+        {
+            return count;
+        }
+    }
+
+    return -1;
+}
+
 void LeCampo(char *campo, int ini, int fim, char *linha)
 {
     // Separa o campo
@@ -487,6 +544,79 @@ void CargaDeDadosClientes()
             totClientes++;
         }
         CargaDeDadosEditaveisClientes();
+    }
+}
+
+void CargaDeDadosEditaveisPS()
+{
+    FILE *arq;
+    char linha[112];
+    char *result;
+    int count = 0;
+    int prestador_id;
+
+    arq = fopen("Datapsedit.txt", "r");
+
+    if (arq == NULL)
+    {
+        printf("Problema ao abrir o arquivo editavel.\n");
+        return;
+    }
+    else
+    {
+        while (!feof(arq))
+        {
+
+            result = fgets(linha, 112, arq);
+
+            if (result)
+            {
+                LeCampo(cpf_temp, 99, 109, linha);
+                prestador_id = BuscaPrestadorCPF(cpf_temp);
+
+                if (prestador_id != -1)
+                {
+                    LeCampo(prestadores[prestador_id].senha, 0, 32, linha);
+                    LeCampo(prestadores[prestador_id].avaliacaotot, 34, 38, linha);
+                    LeCampo(prestadores[prestador_id].avaliacaonum, 40, 44, linha);
+                    LeCampo(prestadores[prestador_id].numero_celular, 46, 63, linha);
+                    LeCampo(prestadores[prestador_id].profissao, 65, 97, linha);
+                }
+            }
+        }
+    }
+}
+
+void CargaDeDadosPS()
+{
+    FILE *arq;
+    char linha[102];
+    char *result;
+
+    arq = fopen("Dataps.txt", "r");
+
+    if (arq == NULL)
+    {
+        printf("Problema ao abrir o arquivo.\n");
+        return;
+    }
+    else
+    {
+        while (!feof(arq))
+        {
+
+            result = fgets(linha, 102, arq);
+
+            if (result)
+            {
+                LeCampo(prestadores[totPrestadores].nome, 0, 32, linha);
+                LeCampo(prestadores[totPrestadores].email, 34, 83, linha);
+                LeCampo(prestadores[totPrestadores].sexo, 84, 88, linha);
+                LeCampo(prestadores[totPrestadores].cpf, 89, 99, linha);
+            }
+            totPrestadores++;
+        }
+        CargaDeDadosEditaveisPS();
     }
 }
 
@@ -673,6 +803,8 @@ void CadastrarUsuario(int tipo){
 void CadastrarUsuarioEscolha(){
 	int escolha_usuario;
 	bool escape = false;
+
+    system("cls");
 	
 	while(escape == false){
 		printf("Como deseja utilizar a sua conta? \n");
@@ -700,19 +832,22 @@ void CadastrarUsuarioEscolha(){
 
 void menu_principal(){
 	bool verifyEscolha = false;
-	char escolha_temp,input_idade[4];
+	char escolha_temp;
+    int input_idade;
+    system("cls");
+
 	if(login_status == true){
 		menu_usuario();
 	}
 	else{
-		printf("= = = =iServe = = = = =\n");
-		printf("1 - Logar como cliente\n");
-		printf("2 - Logar como prestador\n");
-		printf("3 - Cadastro\n");
-		printf("4 - Esqueci minha senha\n");
-		printf("0 - Sair\n")
-		printf("= = = = = = = = = = = =\n");
 		while(verifyEscolha == false){
+            printf("= = = =iServe = = = = =\n");
+            printf("1 - Logar como cliente\n");
+            printf("2 - Logar como prestador\n");
+            printf("3 - Cadastro\n");
+            printf("4 - Esqueci minha senha\n");
+            printf("0 - Sair\n");
+            printf("= = = = = = = = = = = =\n");
 			scanf("%c",&escolha_temp);
 			fflush(stdin);
 			switch (escolha_temp){
@@ -721,13 +856,21 @@ void menu_principal(){
 					menu_login_cliente();
 					break;
 				case '2':
-					printf("Informe a sua idade:");
 					verifyEscolha = true;
-					//menu_login_ps
+					menu_login_prestadores();
 					break;
 				case '3':
-					verifyEscolha = true;
-					//funcCadastro
+					printf("Informe a sua idade:");
+                    scanf("%d",&input_idade);
+                    if(input_idade >= 18){
+					    verifyEscolha = true;
+					    CadastrarUsuarioEscolha();
+                    }else{
+                        system("cls");
+                        printf("Voce precisa ter mais de 18 anos para se cadastrar.\n");
+                        system("pause");
+                    }
+                    break;
 				case '4':
 					verifyEscolha = true;
 					//funcEsqueciMinhaSenha
@@ -735,6 +878,7 @@ void menu_principal(){
 					exit(0);
 					break;
 				default:
+                    system("cls");
 					printf("Escolha uma opcao valida.\n");
 					break;
 			}
@@ -743,21 +887,23 @@ void menu_principal(){
 }
 
 void menu_login_cliente(){
-	int cont = -1;
+	int count = -1;
 	char input_email[128],input_senha[128];
 	int verifySenha;
 	system("cls");
 	printf("Insira seu email: ");
 	gets(input_email);
-	while(strcmp(input_email,clientes[cont].email) != 0){
-		cont++;
-		if(strcmp(input_email,clientes[cont].email) == 0){
+	while(strcmp(input_email,clientes[count].email) != 0){
+		count++;
+		if(strcmp(input_email,clientes[count].email) == 0){
 			printf("Insira sua senha: ");
 			while(verifySenha != 0){
 				gets(input_senha);
-				verifySenha = strcmp(input_senha, clientes[cont].senha);
+				verifySenha = strcmp(input_senha, clientes[count].senha);
 				if(verifySenha == 0){
 					login_status = true;
+                    strcpy(cpf_logado, clientes[count].cpf);
+                    tipo_de_conta = 1;
 					menu_usuario();
 				}
 				else{
@@ -766,46 +912,14 @@ void menu_login_cliente(){
 				}
 			}	
 		}
-		if(cont > totClientes){
+		if(count > totClientes){
 			system("cls");
 			printf("Informe um email valido: ");
 			gets(input_email);
-			cont = 0;
+			count = -1;
 		}
 	}
 }
-
-/*void menu_login_cliente(){
-	char input_email[128],input_senha[128];
-	bool verifyEmail = false, verifySenha = false;
-	system("cls");
-	printf("Insira seu email: ");
-	while(verifyEmail == false){
-		fflush(stdin);
-		gets(input_email);
-		if(strcmp(input_email,email) == 0){
-			verifyEmail = true;
-			printf("Insira sua senha:");
-			while(verifySenha == false){
-				fflush(stdin);
-				gets(input_senha);
-				if(strcmp(input_senha,senha) == 0){
-					verifySenha = true;
-					login_status = true;
-					menu_usuario();
-				}
-				else{
-					system("cls");
-					printf("Insira uma senha valida: ");
-				}
-			}
-		}
-		else{
-			system("cls");
-			printf("Insira um email valido:");
-		}
-	}
-}*/
 
 void menu_login_prestadores(){
 	int cont = -1;
@@ -813,7 +927,8 @@ void menu_login_prestadores(){
 	int verifySenha;
 	system("cls");
 	printf("Insira seu email: ");
-	gets(input_email);
+	fflush(stdin);
+    gets(input_email);
 	while(strcmp(input_email,prestadores[cont].email) != 0){
 		cont++;
 		if(strcmp(input_email,prestadores[cont].email) == 0){
@@ -823,6 +938,8 @@ void menu_login_prestadores(){
 				verifySenha = strcmp(input_senha, prestadores[cont].senha);
 				if(verifySenha == 0){
 					login_status = true;
+                    strcpy(cpf_logado, prestadores[cont].cpf);
+                    tipo_de_conta = 2;
 					menu_usuario();
 				}
 				else{
@@ -835,31 +952,107 @@ void menu_login_prestadores(){
 			system("cls");
 			printf("Informe um email valido: ");
 			gets(input_email);
-			cont = 0;
+			cont = -1;
 		}
 	}
 }
 
 void menu_usuario(){
 	char input_usuario;
+    char esc_user[128];
+    int id;
+
 	system("cls");
 	printf("= = = =iServe = = = = =\n");
 	printf("1 - Ver informacoes\n");
-	printf("2 - Editar informacoes\n");
-	printf("3 - Deletar conta\n");
+	printf("2 - Editar Senha\n");
+    printf("3 - Editar Numero Celular\n");
+	printf("4 - Deletar conta\n");
 	printf("0 - Sair\n");
 	printf("= = = = = = = = = = = =\n");
-	scanf("%c",input_usuario);
+	scanf("%c",&input_usuario);
 	fflush(stdin);
 	switch(input_usuario){
 		case '1':
-			//funcRead();
+			if(tipo_de_conta == 1){
+                id = BuscaClienteCPF(cpf_logado);
+                system("cls");
+                printf("= = = Informacoes = = =\n");
+                printf("Nome: %s\n", clientes[id].nome);
+
+                float aval_tot = atof(clientes[id].avaliacaotot);
+                float aval_num = atof(clientes[id].avaliacaonum);
+                printf("Avaliacao: %.2f\n",aval_tot / aval_num);
+
+                printf("Numero Celular: %s\n", clientes[id].numero_celular);
+                printf("Sexo: %s\n", clientes[id].sexo);
+                printf("E-mail: %s\n", clientes[id].email);
+                printf("CPF: %s\n", clientes[id].cpf);
+                printf("= = = = = = = = = = = =\n");
+
+                system("pause");
+
+            }else{
+                id = BuscaPrestadorCPF(cpf_logado);
+                system("cls");
+                printf("= = = Informacoes = = =\n");
+                printf("Nome: %s\n", prestadores[id].nome);
+                
+                float aval_tot = atof(prestadores[id].avaliacaotot);
+                float aval_num = atof(prestadores[id].avaliacaonum);
+                printf("Avaliacao: %.2f\n",aval_tot / aval_num);
+
+                printf("Numero Celular: %s\n", prestadores[id].numero_celular);
+                printf("Sexo: %s\n", prestadores[id].sexo);
+                printf("E-mail: %s\n", prestadores[id].email);
+                printf("CPF: %s\n", prestadores[id].cpf);
+                printf("= = = = = = = = = = = =\n");
+
+                system("pause");
+            }
+
 			break;
 		case '2':
-			//funcEdit();
+            printf("Digite a sua nova senha: ");
+            gets(esc_user);
+
+			if(tipo_de_conta == 1){
+                EditarCampoBancoCliente(cpf_logado, 78, 34, esc_user);
+            }else{
+
+            }
 			break;
-		case '3':
-			//funcDelete();
+        case '3':
+            printf("Digite a sua nova senha: ");
+            gets(esc_user);
+
+            if(tipo_de_conta == 1){
+
+            }else{
+                
+            }
+            break;
+		case '4':
+            printf("Insira o seu CPF para confirmar a exclusao da conta: ");
+            gets(esc_user);
+            if(strcmp(esc_user, cpf_logado) == 0){
+                if (tipo_de_conta == 1)
+                {
+                    DeletarUsuarioBancoCliente(esc_user);
+                    system("cls");
+                    printf("Conta deletada com sucesso.");
+                    login_status = false;
+                    system("pause");
+                    
+                }else{
+                    DeletarUsuarioBancoPS(esc_user);
+                    system("cls");
+                    printf("Conta deletada com sucesso.");
+                    login_status = false;
+                    system("pause");
+
+                }
+            }
 			break;
 		case '0':
 			login_status = false;
@@ -869,13 +1062,14 @@ void menu_usuario(){
 	
 int main()
 {
-    setlocale(LC_ALL, "");
-    setlocale(LC_CTYPE, "pt_BR.UTF-8");
+    
+    //setlocale(LC_ALL, "");
+    //setlocale(LC_CTYPE, "pt_BR.UTF-8");
 
-    //CargaDeDadosClientes();
-    //CadastrarUsuarioEscolha();    
-    //DeletarUsuarioBancoPS("07526069135");
-    EditarCampoBancoCliente("01959087088", 78, 34, "SenhaDois");
+    CargaDeDadosClientes();
+    CargaDeDadosPS();
 
+    menu_principal();
+    
     return 0;
 }
