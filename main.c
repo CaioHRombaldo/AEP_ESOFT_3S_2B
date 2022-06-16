@@ -668,10 +668,11 @@ void menu_principal(){
 	}
 	else{
 		printf("= = = =iServe = = = = =\n");
-		printf("1 - Login\n");
-		printf("2 - Cadastro\n");
-		printf("3 - Esqueci minha senha\n");
-		printf("0 - Sair\n");
+		printf("1 - Logar como cliente\n");
+		printf("2 - Logar como prestador\n");
+		printf("3 - Cadastro\n");
+		printf("4 - Esqueci minha senha\n");
+		printf("0 - Sair\n")
 		printf("= = = = = = = = = = = =\n");
 		while(verifyEscolha == false){
 			scanf("%c",&escolha_temp);
@@ -679,14 +680,17 @@ void menu_principal(){
 			switch (escolha_temp){
 				case '1':
 					verifyEscolha = true;
-					menu_login();
+					menu_login_cliente();
 					break;
 				case '2':
 					printf("Informe a sua idade:");
 					verifyEscolha = true;
-					//funcCadastro
+					//menu_login_ps
 					break;
 				case '3':
+					verifyEscolha = true;
+					//funcCadastro
+				case '4':
 					verifyEscolha = true;
 					//funcEsqueciMinhaSenha
 				case '0':
@@ -700,7 +704,40 @@ void menu_principal(){
 	}	
 }
 
-void menu_login(){
+void menu_login_cliente(){
+	int cont = -1;
+	char input_email[128],input_senha[128];
+	int verifySenha;
+	system("cls");
+	printf("Insira seu email: ");
+	gets(input_email);
+	while(strcmp(input_email,clientes[cont].email) != 0){
+		cont++;
+		if(strcmp(input_email,clientes[cont].email) == 0){
+			printf("Insira sua senha: ");
+			while(verifySenha != 0){
+				gets(input_senha);
+				verifySenha = strcmp(input_senha, clientes[cont].senha);
+				if(verifySenha == 0){
+					login_status = true;
+					menu_usuario();
+				}
+				else{
+					system("cls");
+					printf("Informe uma senha valida: ");
+				}
+			}	
+		}
+		if(cont > totClientes){
+			system("cls");
+			printf("Informe um email valido: ");
+			gets(input_email);
+			cont = 0;
+		}
+	}
+}
+
+/*void menu_login_cliente(){
 	char input_email[128],input_senha[128];
 	bool verifyEmail = false, verifySenha = false;
 	system("cls");
@@ -728,6 +765,39 @@ void menu_login(){
 		else{
 			system("cls");
 			printf("Insira um email valido:");
+		}
+	}
+}*/
+
+void menu_login_prestadores(){
+	int cont = -1;
+	char input_email[128],input_senha[128];
+	int verifySenha;
+	system("cls");
+	printf("Insira seu email: ");
+	gets(input_email);
+	while(strcmp(input_email,prestadores[cont].email) != 0){
+		cont++;
+		if(strcmp(input_email,prestadores[cont].email) == 0){
+			printf("Insira sua senha: ");
+			while(verifySenha != 0){
+				gets(input_senha);
+				verifySenha = strcmp(input_senha, prestadores[cont].senha);
+				if(verifySenha == 0){
+					login_status = true;
+					menu_usuario();
+				}
+				else{
+					system("cls");
+					printf("Informe uma senha valida: ");
+				}
+			}	
+		}
+		if(cont > totPrestadores){
+			system("cls");
+			printf("Informe um email valido: ");
+			gets(input_email);
+			cont = 0;
 		}
 	}
 }
